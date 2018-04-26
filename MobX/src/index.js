@@ -5,8 +5,11 @@ import { configure } from 'mobx';
 
 import injectNormalizedCss from './styles/normalize';
 import MainApp from './mainApp';
+import { seedData } from './api/users';
 
 injectNormalizedCss();
+
+seedData();
 
 // True = only action based working
 configure({ enforceActions: true });

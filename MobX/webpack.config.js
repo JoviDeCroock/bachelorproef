@@ -1,4 +1,3 @@
-const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -39,9 +38,6 @@ module.exports = () => {
       publicPath: '/',
     },
     devtool: 'source-map',
-    entry: {
-      main: mainEntry,
-    },
     mode: NODE_ENV,
     module: {
       rules: [
@@ -56,19 +52,7 @@ module.exports = () => {
         },
       ],
     },
-    output: {
-      filename: 'index.js',
-      path: path.resolve(__dirname, './dist'),
-      publicPath: '/',
-    },
     plugins,
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src'),
-        '@codifly-react-framework': path.resolve(__dirname, '..', 'react-framework'),
-      },
-      modules: [path.resolve(__dirname, '..', 'react-framework', 'node_modules'), 'node_modules'],
-    },
     stats: {
       moduleTrace: false,
     },

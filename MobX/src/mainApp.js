@@ -6,7 +6,17 @@ import { Provider as MobxProvider } from 'mobx-react';
 import { enableLogging } from 'mobx-logger';
 
 // THEME
+// /////
 import defaultTheme from './styles/theme';
+
+// STORES
+// //////
+import stores from './stores';
+
+// LAYOUT
+// //////
+import { Header, Page } from './components';
+import UsersPage from './pages/users';
 
 const browserHistory = createBrowserHistory();
 
@@ -18,16 +28,24 @@ const config = {
   transaction: false,
 };
 
+const links = [
+  { label: 'Users', value: '/users' },
+];
+
 enableLogging(config);
 
 const MainApp = () => (
   <ThemeProvider theme={defaultTheme}>
     <Router history={browserHistory}>
-      <MobxProvider {...{}}>
+      <MobxProvider {...stores}>
         <Fragment>
-          <Switch>
-            <Route exact path="/" component={undefined} />
-          </Switch>
+          <Header links={links} />
+          <Page>
+            <Switch>
+              <Route exact path="/" component={undefined} />
+              <Route path="/users" component={UsersPage} />
+            </Switch>
+          </Page>
         </Fragment>
       </MobxProvider>
     </Router>
