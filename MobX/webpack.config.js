@@ -3,16 +3,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => {
   const { NODE_ENV } = process.env;
-
   const plugins = [];
+
   plugins.push(new webpack.DefinePlugin({
     'process.env': { NODE_ENV: JSON.stringify(NODE_ENV) },
   }));
+
   if (NODE_ENV !== 'production') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
-  plugins.push(new webpack.NamedModulesPlugin());
-  plugins.push(new webpack.NoEmitOnErrorsPlugin());
+
   plugins.push(new HtmlWebpackPlugin({
     title: 'Lubricant hours',
   }));
@@ -28,7 +28,7 @@ module.exports = () => {
 
   return {
     devServer: {
-      clientLogLevel: 'none', // Silences WDS
+      clientLogLevel: 'none',
       contentBase: './dist',
       historyApiFallback: true,
       host: '127.0.0.1',
@@ -46,13 +46,13 @@ module.exports = () => {
           test: /\.(js)$/,
           use: ['babel-loader'],
         },
-        {
-          test: /\.gif$|\.jpg$|\.jpeg$|\.png|\.eot$|\.svg$|\.ttf$|\.woff$|\.woff2$|\.pdf$/,
-          use: ['file-loader'],
-        },
       ],
     },
+    performance: { hints: false },
     plugins,
+    resolve: {
+      extensions: ['.js'],
+    },
     stats: {
       moduleTrace: false,
     },
