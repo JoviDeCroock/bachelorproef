@@ -14,7 +14,7 @@ module.exports = () => {
   }
 
   plugins.push(new HtmlWebpackPlugin({
-    title: 'Lubricant hours',
+    title: 'Thesis MobX-CMS',
   }));
 
   const mainEntry = ['babel-polyfill'];
@@ -50,9 +50,7 @@ module.exports = () => {
     },
     performance: { hints: false },
     plugins,
-    resolve: {
-      extensions: ['.js'],
-    },
+    resolve: { extensions: ['.js'] },
     stats: {
       moduleTrace: false,
     },

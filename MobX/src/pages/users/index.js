@@ -1,18 +1,12 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
 import { Route, Switch } from 'react-router-dom';
+
+import { Title } from '../../styles/common';
 
 import UsersList from './read/list';
 import UserDetail from './read/detail';
 import Updateuser from './persist/update';
 import CreateUser from './persist/create';
-
-const Title = styled.h1`
-  margin: 0;
-  text-align: center;
-  text-decoration: underline;
-  width: 100%;
-`;
 
 const UsersPage = () => (
   <Fragment>

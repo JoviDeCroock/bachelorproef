@@ -16,7 +16,11 @@ import stores from './stores';
 // LAYOUT
 // //////
 import { Header, Page } from './components';
+
+// PAGES
+// /////
 import UsersPage from './pages/users';
+import HomePage from './pages/home';
 
 const browserHistory = createBrowserHistory();
 
@@ -32,7 +36,9 @@ const links = [
   { label: 'Users', value: '/users' },
 ];
 
-enableLogging(config);
+if (process.node_env !== 'Production') {
+  enableLogging(config);
+}
 
 const MainApp = () => (
   <ThemeProvider theme={defaultTheme}>
@@ -42,7 +48,7 @@ const MainApp = () => (
           <Header links={links} />
           <Page>
             <Switch>
-              <Route exact path="/" component={undefined} />
+              <Route exact path="/" component={HomePage} />
               <Route path="/users" component={UsersPage} />
             </Switch>
           </Page>
