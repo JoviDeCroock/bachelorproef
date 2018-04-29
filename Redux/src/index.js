@@ -1,15 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { configure } from 'mobx';
 
 import injectNormalizedCss from './styles/normalize';
 import MainApp from './mainApp';
 
 // Normalize our css
 injectNormalizedCss();
-
-// True = only action based working
-configure({ enforceActions: true });
 
 // Render the app in a react-hot-loader container
 const render = (App) => {

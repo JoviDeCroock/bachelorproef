@@ -3,8 +3,12 @@
   "license": "MIT",
   "version": "0.0.1",
   "scripts": {
-    "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server"
+    "build": "NODE_ENV=production webpack -p",
+    "dev": "NODE_ENV=development webpack-dev-server",
+    "stats": "NODE_ENV=production webpack --json > stats.json",
+    "dev-windows": "cross-env NODE_ENV=development webpack-dev-server",
+    "build-windows": "cross-env NODE_ENV=production webpack",
+    "stats-windows": "cross-env NODE_ENV=production webpack --json > stats.json"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -31,10 +35,6 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "mobx": "^4.2.0",
-    "mobx-formstate": "^0.1.6",
-    "mobx-logger": "^0.7.0",
-    "mobx-react": "^5.0.0",
     "normalize.css": "^8.0.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",

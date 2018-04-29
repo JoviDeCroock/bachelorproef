@@ -1,7 +1,6 @@
 import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Field } from 'mobx-formstate';
 
 const TextInput = styled.input`
   border: 0;
@@ -64,4 +63,4 @@ class TextField extends PureComponent {
   }
 }
 
-export default props => <Field Component={TextField} {...props} />;
+export default TextField;

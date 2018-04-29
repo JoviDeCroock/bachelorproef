@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { inject, observer } from 'mobx-react';
+import { connect } from 'react-redux';
 
-import userStorePropType from '../../storePropType';
 import { LOADING, ERROR } from '../../../../constants/states';
 import { Button } from '../../../../components';
+import { fetchUsersAction } from '../../../../actions/users';
+import { getUsersLimit, getUsersOffset, getUsersSearchString, getUsersStatus, getUsersData, getUsersTotalCount } from '../../../../selectors/users';
 
 const ListWrapper = styled.div`
   align-items: flex-start;
@@ -43,24 +44,27 @@ const ButtonContainer = styled.div`
   width: 15%;
 `;
 
-@inject('userStore')
-@observer
 class UsersList extends Component {
   static propTypes = {
+    fetchUsers: PropTypes.func.isRequired,
     history: PropTypes.shape({
       push: PropTypes.func,
     }).isRequired,
-    userStore: userStorePropType,
+    limit: PropTypes.number,
+    offset: PropTypes.number,
+    searchString: PropTypes.string,
+    status: PropTypes.symbol,
+    users: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    })),
   }
 
   componentDidMount() {
-    const { userStore: { fetchUsers } } = this.props;
-    fetchUsers();
-  }
-
-  componentWillUnmount() {
-    const { userStore: { clearList } } = this.props;
-    clearList();
+    const {
+      fetchUsers, limit, offset, searchString,
+    } = this.props;
+    fetchUsers({ limit, offset, searchString });
   }
 
   reroute = (mode, id) => {
@@ -69,8 +73,7 @@ class UsersList extends Component {
   }
 
   render() {
-    const { userStore: { status, users } } = this.props;
-
+    const { status, users } = this.props;
     if (status === LOADING) {
       return <div>Loading</div>;
     } else if (status === ERROR) {
@@ -97,4 +100,13 @@ class UsersList extends Component {
   }
 }
 
-export default UsersList;
+export default connect(state => ({
+  limit: getUsersLimit(state),
+  offset: getUsersOffset(state),
+  searchString: getUsersSearchString(state),
+  status: getUsersStatus(state),
+  totalCount: getUsersTotalCount(state),
+  users: getUsersData(state),
+}), {
+  fetchUsers: fetchUsersAction,
+})(UsersList);

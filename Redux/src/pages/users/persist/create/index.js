@@ -1,13 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
-import { Form } from 'mobx-formstate';
 
 import { createUser } from '../../../../api/users';
 import { Button, TextField } from '../../../../components';
 
-@inject('userStore')
-@observer
 class CreateUser extends Component {
   static propTypes = {
     onSubmit: PropTypes.func,
@@ -31,6 +27,4 @@ class CreateUser extends Component {
   }
 }
 
-export default Form({
-  handleSubmit: createUser,
-})(CreateUser);
+export default CreateUser;
