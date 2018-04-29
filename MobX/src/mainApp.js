@@ -4,6 +4,7 @@ import { Route, Switch, Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { Provider as MobxProvider } from 'mobx-react';
 import { enableLogging } from 'mobx-logger';
+import { hot } from 'react-hot-loader';
 
 // THEME
 // /////
@@ -36,7 +37,7 @@ const links = [
   { label: 'Users', value: '/users' },
 ];
 
-if (process.node_env !== 'Production') {
+if (process.node_env) {
   enableLogging(config);
 }
 
@@ -48,8 +49,8 @@ const MainApp = () => (
           <Header links={links} />
           <Page>
             <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route path="/users" component={UsersPage} />
+              <Route exact path="/xD" component={HomePage} />
+              <Route path="/" component={UsersPage} />
             </Switch>
           </Page>
         </Fragment>
@@ -58,4 +59,4 @@ const MainApp = () => (
   </ThemeProvider>
 );
 
-export default MainApp;
+export default hot(MainApp);

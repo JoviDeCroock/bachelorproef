@@ -1,15 +1,32 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
+
+import userStorePropType from '../../storePropType';
+
+const ListWrapper = styled.div`
+  align-items: flex-start;
+  border: 1px solid yellow;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ItemWrapper = styled.div`
+  align-items: center;
+  border: 1px solid pink;
+  display: flex;
+  width: 100%;
+`;
 
 @inject('userStore')
 @observer
 class UsersList extends Component {
   static propTypes = {
-    userStore: PropTypes.shape({
-      fetchUsers: PropTypes.func,
-      users: PropTypes.object,
-    }),
+    history: PropTypes.shape({
+      push: PropTypes.func,
+    }).isRequired,
+    userStore: userStorePropType,
   }
 
   componentDidMount() {
@@ -17,15 +34,31 @@ class UsersList extends Component {
     fetchUsers();
   }
 
+  componentWillUnmount() {
+    const { userStore: { clearList } } = this.props;
+    clearList();
+  }
+
+  reroute = (mode, id) => {
+    const { history } = this.props;
+    history.push(`/users/${id}/${mode}`);
+  }
+
   render() {
     const { userStore: { users } } = this.props;
-    console.log(users.toJS());
     return (
       <Fragment>
         <h1>List</h1>
-        <div>
-          {users.map(({ id, name }) => <p key={id}>{name}</p>)}
-        </div>
+        <ListWrapper>
+          {users.map(({ id, name }) => (
+            <ItemWrapper key={id}>
+              <p>{id}</p>
+              <p>{name}</p>
+              <button onClick={this.reroute.bind(this, 'update', id)}>Update</button>
+              <button onClick={this.reroute.bind(this, 'view', id)}>View</button>
+            </ItemWrapper>
+          ))}
+        </ListWrapper>
       </Fragment>
     );
   }

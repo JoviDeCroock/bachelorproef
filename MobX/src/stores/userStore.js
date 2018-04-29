@@ -1,11 +1,11 @@
 import { action, observable, runInAction } from 'mobx';
 
 import { ERROR, LOADED, LOADING } from '../constants/states';
-import { fetchUsers } from '../api/users';
+import { fetchUser, fetchUsers } from '../api/users';
 
 class UserStore {
   @observable users = [];
-  @observable usersHash = observable.map();
+  @observable selectedUser = {};
   @observable searchString = null;
   @observable limit = 10;
   @observable offset = 0;
@@ -24,6 +24,35 @@ class UserStore {
       this.status = ERROR;
       throw error;
     }
+  }
+
+  @action.bound
+  async fetchUser(id) {
+    try {
+      this.status = LOADING;
+      const users = await fetchUser(id);
+
+      runInAction(() => {
+        this.users = users;
+        this.status = LOADED;
+      });
+    } catch (error) {
+      this.status = ERROR;
+      throw error;
+    }
+  }
+
+  @action.bound
+  clearSelection() {
+    this.selectedUser = {};
+  }
+
+  @action.bound
+  clearList() {
+    this.users = [];
+    this.searchString = null;
+    this.limit = 10;
+    this.offset = 0;
   }
 }
 
