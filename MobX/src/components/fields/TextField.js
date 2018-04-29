@@ -6,7 +6,9 @@ import { Field } from 'mobx-formstate';
 const TextInput = styled.input`
   border: 0;
   border-bottom: 1px solid black;
+  background: ${({ disabled }) => (disabled ? '#959998' : 'transparent')};
   margin-bottom: 10px;
+  width: auto;
   :focus {
     outline: none;
   }
@@ -21,11 +23,12 @@ const ErrorText = styled.p`
 class TextField extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
+    disabled: PropTypes.bool,
     error: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
     type: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.any, // eslint-disable-line
   }
 
   constructor(props) {
@@ -42,13 +45,14 @@ class TextField extends PureComponent {
 
   render() {
     const {
-      className, error, placeholder, value = '', type = 'text',
+      className, disabled, error, placeholder, value = '', type = 'text',
     } = this.props;
 
     return (
       <Fragment>
         <TextInput
           className={className}
+          disabled={disabled}
           placeholder={placeholder}
           type={type}
           value={value}

@@ -10,13 +10,15 @@ class UserStore {
   @observable limit = 10;
   @observable offset = 0;
   @observable status = LOADING;
+  @observable totalCount = 0;
 
   @action.bound
   async fetchUsers() {
     try {
       this.status = LOADING;
-      const users = await fetchUsers(this.searchString, this.limit, this.offset);
+      const { users, totalCount } = await fetchUsers(this.searchString, this.limit, this.offset);
       runInAction(() => {
+        this.totalCount = totalCount;
         this.users = users;
         this.status = LOADED;
       });

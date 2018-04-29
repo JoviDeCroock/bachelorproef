@@ -1,25 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
+import PropTypes from 'prop-types';
+import { Form } from 'mobx-formstate';
 
 import userStorePropType from '../../storePropType';
+import { createUser } from '../../../../api/users';
+import { Button, TextField } from '../../../../components';
 
 @inject('userStore')
 @observer
 class CreateUser extends Component {
   static propTypes = {
-    userStore: userStorePropType,
-  }
-
-  submit = () => {
-    const { userStore } = this.props;
-    userStore.createUser();
+    onSubmit: PropTypes.func,
   }
 
   render() {
+    const { onSubmit } = this.props;
+
     return (
-      <h1>Create</h1>
+      <Fragment>
+        <h1>Create</h1>
+        <form onSubmit={onSubmit}>
+          <TextField
+            fieldId="name"
+            label="Name"
+            placeholder="Name" />
+          <Button type="submit" label="Submit" />
+        </form>
+      </Fragment>
     );
   }
 }
 
-export default CreateUser;
+export default Form({
+  handleSubmit: createUser,
+})(CreateUser);

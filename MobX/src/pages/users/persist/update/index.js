@@ -5,7 +5,7 @@ import { Form } from 'mobx-formstate';
 
 import userStorePropType from '../../storePropType';
 import { updateUser } from '../../../../api/users';
-import { TextField } from '../../../../components';
+import { Button, TextField } from '../../../../components';
 import { LOADING, ERROR } from '../../../../constants/states';
 
 @inject('userStore')
@@ -17,6 +17,7 @@ class UpdateUser extends Component {
         userId: PropTypes.string,
       }),
     }),
+    onSubmit: PropTypes.func,
     patchValues: PropTypes.func,
     userStore: userStorePropType,
   }
@@ -29,12 +30,17 @@ class UpdateUser extends Component {
   componentDidUpdate(prevProps) {
     const { patchValues, userStore: { selectedUser } } = this.props;
     if (prevProps.selectedUser !== selectedUser) {
-      patchValues({ name: selectedUser.name });
+      patchValues(selectedUser);
     }
   }
 
+  componentWillUnmount() {
+    const { userStore: { clearSelection } } = this.props;
+    clearSelection();
+  }
+
   render() {
-    const { userStore: { status } } = this.props;
+    const { onSubmit, userStore: { status } } = this.props;
 
     if (status === LOADING) {
       return <div>Loading</div>;
@@ -45,11 +51,17 @@ class UpdateUser extends Component {
     return (
       <Fragment>
         <h1>Update</h1>
-        <form>
+        <form onSubmit={onSubmit}>
+          <TextField
+            disabled
+            fieldId="id"
+            label="id"
+            placeholder="id" />
           <TextField
             fieldId="name"
             label="Name"
             placeholder="Name" />
+          <Button type="submit" label="Submit" />
         </form>
       </Fragment>
     );

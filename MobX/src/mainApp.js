@@ -34,7 +34,7 @@ const config = {
 };
 
 const links = [
-  { label: 'Users', value: '/users' },
+  { label: 'Users', value: '/' },
 ];
 
 enableLogging(config);

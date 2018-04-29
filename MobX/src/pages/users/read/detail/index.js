@@ -17,6 +17,11 @@ class UsersDetail extends Component {
     userStore: userStorePropType,
   }
 
+  componentWillUnmount() {
+    const { userStore: { clearSelection } } = this.props;
+    clearSelection();
+  }
+
   componentDidMount() {
     const { match: { params: { userId } }, userStore: { fetchUser } } = this.props;
     // Refetch
