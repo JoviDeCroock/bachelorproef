@@ -59,4 +59,4 @@ const MainApp = () => (
   </ThemeProvider>
 );
 
-export default hot(MainApp);
+export default hot(module)(MainApp);

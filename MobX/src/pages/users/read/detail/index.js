@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
 import userStorePropType from '../../storePropType';
+import { LOADING, ERROR } from '../../../../constants/states';
 
 @inject('userStore')
 @observer
@@ -15,15 +16,28 @@ class UsersDetail extends Component {
     }),
     userStore: userStorePropType,
   }
+
   componentDidMount() {
-    const { match: { params: { userId } }, userStore } = this.props;
+    const { match: { params: { userId } }, userStore: { fetchUser } } = this.props;
     // Refetch
-    userStore.fetchUser(userId);
+    fetchUser(userId);
   }
 
   render() {
+    const { userStore: { status, selectedUser: { id, name } } } = this.props;
+
+    if (status === LOADING) {
+      return <div>Loading</div>;
+    } else if (status === ERROR) {
+      return <div>An unexpected Error occurred</div>;
+    }
+
     return (
-      <h1>Detail</h1>
+      <Fragment>
+        <h1>Detail</h1>
+        <h2>{id}</h2>
+        <p>{name}</p>
+      </Fragment>
     );
   }
 }

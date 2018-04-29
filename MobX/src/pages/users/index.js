@@ -4,10 +4,10 @@ import { Route, Switch } from 'react-router-dom';
 
 import { Title } from '../../styles/common';
 
-const UsersList = () => <Async load={import('./read/list')} />;
-const UserDetail = () => <Async load={import('./read/detail')} />;
-const Updateuser = () => <Async load={import('./persist/update')} />;
-const CreateUser = () => <Async load={import('./persist/create')} />;
+const UsersList = props => <Async load={import('./read/list')} componentProps={props} />;
+const UserDetail = props => <Async load={import('./read/detail')} componentProps={props} />;
+const Updateuser = props => <Async load={import('./persist/update')} componentProps={props} />;
+const CreateUser = props => <Async load={import('./persist/create')} componentProps={props} />;
 
 const UsersPage = () => (
   <Fragment>

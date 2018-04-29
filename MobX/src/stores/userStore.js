@@ -30,10 +30,10 @@ class UserStore {
   async fetchUser(id) {
     try {
       this.status = LOADING;
-      const users = await fetchUser(id);
+      const user = await fetchUser(id);
 
       runInAction(() => {
-        this.users = users;
+        this.selectedUser = user;
         this.status = LOADED;
       });
     } catch (error) {

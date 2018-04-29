@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { inject, observer } from 'mobx-react';
 
 import userStorePropType from '../../storePropType';
+import { LOADING, ERROR } from '../../../../constants/states';
 
 const ListWrapper = styled.div`
   align-items: flex-start;
@@ -45,7 +46,14 @@ class UsersList extends Component {
   }
 
   render() {
-    const { userStore: { users } } = this.props;
+    const { userStore: { status, users } } = this.props;
+
+    if (status === LOADING) {
+      return <div>Loading</div>;
+    } else if (status === ERROR) {
+      return <div>An unexpected Error occurred</div>;
+    }
+
     return (
       <Fragment>
         <h1>List</h1>

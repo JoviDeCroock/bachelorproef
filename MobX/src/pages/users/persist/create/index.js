@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 
+import userStorePropType from '../../storePropType';
+
+@inject('userStore')
+@observer
 class CreateUser extends Component {
-  componentDidMount() {
-    // Fetch data
+  static propTypes = {
+    userStore: userStorePropType,
+  }
+
+  submit = () => {
+    const { userStore } = this.props;
+    userStore.createUser();
   }
 
   render() {
