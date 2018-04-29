@@ -1,81 +1,40 @@
-// Functions as Mock api
-const TIMEOUT = 250;
-const ENTITY_AMOUNT = 1000;
+import { get, post, put } from './_request';
 
-const users = [];
-const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+const BASE_URL = 'http://localhost:3001';
 
-export function fetchUsers(searchString, limit, offset) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      let filteredUsers = users;
-      // When there's a searchString we look for the user
-      if (searchString) {
-        filteredUsers = users.filter(u => u.name.contains(searchString));
-      }
-      // Take pagination in account
-      filteredUsers = filteredUsers.slice(offset, offset + limit);
-
-      // Return the users
-      resolve(filteredUsers);
-    }, TIMEOUT);
-  });
+export async function fetchUsers(searchString, limit, offset) {
+  try {
+    const query = `_page=${Math.floor(offset / limit)}&_limit=${limit}`;
+    const { data: users } = await get(`${BASE_URL}/users?${query}`);
+    return users;
+  } catch (err) {
+    throw err;
+  }
 }
 
-export function fetchUser(id) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const userId = Number(id);
-      const user = users.find(u => u.id === userId);
-      if (!user) {
-        reject(new Error('User not found'));
-      }
-      // Return the user
-      resolve(user);
-    }, TIMEOUT);
-  });
+export async function fetchUser(id) {
+  try {
+    const { data: user } = await get(`${BASE_URL}/users/${id}`);
+    return user;
+  } catch (err) {
+    throw err;
+  }
 }
 
-export function createUser(user) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (!user || !user.name) {
-        reject(new Error('A name is required'));
-      }
-      users.push(user);
-      // Return the new user
-      resolve(user);
-    }, TIMEOUT);
-  });
+export async function createUser(user) {
+  try {
+    const { data: newUser } = await post(`${BASE_URL}/users/`, user);
+    return newUser;
+  } catch (err) {
+    throw err;
+  }
 }
 
-export function updateUser(id, user) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const alreadyExists = users.find(u => u.id === id);
-      if (!alreadyExists) {
-        reject(new Error('User not found'));
-      }
-      const index = users.indexOf(alreadyExists);
-      users[index] = {
-        ...user,
-      };
-      // Return the updated user
-      resolve(users[index]);
-    }, TIMEOUT);
-  });
-}
-
-export function seedData() {
-  for (let id = 0; id < ENTITY_AMOUNT; id += 1) {
-    let name = '';
-    for (let i = 0; i < 5; i += 1) {
-      name += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-
-    users.push({
-      id,
-      name,
-    });
+export async function updateUser(id, user) {
+  try {
+    const { data: updatedUser } = await put(`${BASE_URL}/users/${id}`, user);
+    return updatedUser;
+  } catch (err) {
+    throw err;
   }
 }
