@@ -11,7 +11,7 @@ module.exports = () => {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  plugins.push(new HtmlWebpackPlugin({ title: 'CMS - MobX' }));
+  plugins.push(new HtmlWebpackPlugin({ title: 'CMS - Redux' }));
 
   // Entry
   const main = ['babel-polyfill'];
@@ -24,7 +24,7 @@ module.exports = () => {
   main.push('./src/index');
 
   // devtool
-  const devtool = NODE_ENV !== 'production' ? 'source-map' : false;
+  const devtool = NODE_ENV !== 'production' ? 'source-map' : undefined;
 
   // Configuration
   return {

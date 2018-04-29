@@ -37,7 +37,7 @@ const links = [
   { label: 'Users', value: '/' },
 ];
 
-enableLogging(config);
+if (process.env.NODE_ENV !== 'production') { enableLogging(config); }
 
 const MainApp = () => (
   <ThemeProvider theme={defaultTheme}>
