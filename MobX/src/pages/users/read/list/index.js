@@ -8,16 +8,36 @@ import { LOADING, ERROR } from '../../../../constants/states';
 
 const ListWrapper = styled.div`
   align-items: flex-start;
-  border: 1px solid yellow;
+  border: 1px solid ${({ theme }) => theme.darkAccent};
   display: flex;
   flex-direction: column;
 `;
 
 const ItemWrapper = styled.div`
   align-items: center;
-  border: 1px solid pink;
+  border: 1px solid ${({ theme }) => theme.darkAccent};
   display: flex;
   width: 100%;
+  > * {
+    height: 100%;
+    padding: 10px;
+    text-align: left;
+  }
+`;
+
+const IdCell = styled.div`
+  width:5%;
+`;
+
+const NameCell = styled.div`
+  border-left: 1px solid ${({ theme }) => theme.darkAccent};
+  font-size: 22px;
+  width: 75%;
+`;
+
+const ButtonContainer = styled.div`
+  border-left: 1px solid ${({ theme }) => theme.darkAccent};
+  width: 20%;
 `;
 
 @inject('userStore')
@@ -60,10 +80,12 @@ class UsersList extends Component {
         <ListWrapper>
           {users.map(({ id, name }) => (
             <ItemWrapper key={id}>
-              <p>{id}</p>
-              <p>{name}</p>
-              <button onClick={this.reroute.bind(this, 'update', id)}>Update</button>
-              <button onClick={this.reroute.bind(this, 'view', id)}>View</button>
+              <IdCell>{id}</IdCell>
+              <NameCell>{name}</NameCell>
+              <ButtonContainer>
+                <button onClick={this.reroute.bind(this, 'update', id)}>Update</button>
+                <button onClick={this.reroute.bind(this, 'view', id)}>View</button>
+              </ButtonContainer>
             </ItemWrapper>
           ))}
         </ListWrapper>

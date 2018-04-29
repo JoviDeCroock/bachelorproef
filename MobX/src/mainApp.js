@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Async from 'react-code-splitting';
 import createBrowserHistory from 'history/createBrowserHistory'; // eslint-disable-line
 import { Route, Switch, Router } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -20,11 +21,10 @@ import { Header, Page } from './components';
 
 // PAGES
 // /////
-import UsersPage from './pages/users';
-import HomePage from './pages/home';
+const UsersPage = props => <Async load={import('./pages/users')} componentProps={props} />;
+const HomePage = props => <Async load={import('./pages/home')} componentProps={props} />;
 
 const browserHistory = createBrowserHistory();
-
 const config = {
   action: true,
   compute: false,

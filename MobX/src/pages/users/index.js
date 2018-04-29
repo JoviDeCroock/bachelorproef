@@ -13,10 +13,10 @@ const UsersPage = () => (
   <Fragment>
     <Title>Users</Title>
     <Switch>
-      <Route exact path="/users" component={UsersList} />
-      <Route exact path="/users/:userId/view" component={UserDetail} />
-      <Route exact path="/users/:userId/update" component={Updateuser} />
-      <Route exact path="/users/create" component={CreateUser} />
+      <Route exact path="/" component={UsersList} />
+      <Route exact path="/:userId/view" component={UserDetail} />
+      <Route exact path="/:userId/update" component={Updateuser} />
+      <Route exact path="/create" component={CreateUser} />
     </Switch>
   </Fragment>
 );
