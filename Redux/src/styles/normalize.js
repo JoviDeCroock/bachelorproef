@@ -12,7 +12,6 @@ const injectGlobalTimesheetCss = () => injectGlobal`
     height: 100%;
   }
   body {
-    /* No ugly browser default padding/margin */
     padding: 0;
     margin: 0;
     /* Smooth text hack by Daniël */
@@ -22,7 +21,7 @@ const injectGlobalTimesheetCss = () => injectGlobal`
     -moz-osx-font-smoothing: grayscale;
     text-shadow: 0.0625rem 0.0625rem 0.0625rem rgba(0,0,0,.004);
     height: 100%;
-    * { /* Give it some specificity by putting this in body */
+    * {
       box-sizing: border-box;
       font-family: Helvetica;
     }

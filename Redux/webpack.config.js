@@ -4,32 +4,31 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => {
   const { NODE_ENV } = process.env;
-
+  // Webpack plugins
   const plugins = [];
-  plugins.push(new webpack.DefinePlugin({
-    'process.env': { NODE_ENV: JSON.stringify(NODE_ENV) },
-  }));
+
   if (NODE_ENV !== 'production') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
-  plugins.push(new webpack.NamedModulesPlugin());
-  plugins.push(new webpack.NoEmitOnErrorsPlugin());
-  plugins.push(new HtmlWebpackPlugin({
-    title: 'Lubricant hours',
-  }));
 
-  const mainEntry = ['babel-polyfill'];
+  plugins.push(new HtmlWebpackPlugin({ title: 'CMS - MobX' }));
+
+  // Entry
+  const main = ['babel-polyfill'];
   if (NODE_ENV !== 'production') {
-    mainEntry.push('react-hot-loader/patch');
-    mainEntry.push('webpack-dev-server/client?http://127.0.0.1:3000');
-    mainEntry.push('webpack/hot/only-dev-server');
+    main.push('react-hot-loader/patch');
+    main.push('webpack-dev-server/client?http://127.0.0.1:3000');
+    main.push('webpack/hot/only-dev-server');
   }
 
-  mainEntry.push('./src/index');
+  main.push('./src/index');
 
+  // devtool
+  const devtool = NODE_ENV !== 'production' ? 'source-map' : false;
+
+  // Configuration
   return {
     devServer: {
-      clientLogLevel: 'none', // Silences WDS
       contentBase: './dist',
       historyApiFallback: true,
       host: '127.0.0.1',
@@ -38,21 +37,15 @@ module.exports = () => {
       port: 3000,
       publicPath: '/',
     },
-    devtool: 'source-map',
-    entry: {
-      main: mainEntry,
-    },
+    devtool,
+    entry: { main },
     mode: NODE_ENV,
     module: {
       rules: [
         {
-          exclude: /node_modules/,
+          exclude: /node_modules\.*/,
           test: /\.(js)$/,
           use: ['babel-loader'],
-        },
-        {
-          test: /\.gif$|\.jpg$|\.jpeg$|\.png|\.eot$|\.svg$|\.ttf$|\.woff$|\.woff2$|\.pdf$/,
-          use: ['file-loader'],
         },
       ],
     },
@@ -62,15 +55,7 @@ module.exports = () => {
       publicPath: '/',
     },
     plugins,
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src'),
-        '@codifly-react-framework': path.resolve(__dirname, '..', 'react-framework'),
-      },
-      modules: [path.resolve(__dirname, '..', 'react-framework', 'node_modules'), 'node_modules'],
-    },
-    stats: {
-      moduleTrace: false,
-    },
+    resolve: { extensions: ['.js'] },
+    stats: { moduleTrace: false },
   };
 };

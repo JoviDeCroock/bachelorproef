@@ -1,9 +1,9 @@
 export default {
-  accent: '#34758B',
   danger: '#e34b48',
-  logoBg: '#004157',
+  darkAccent: '#956D7A',
+  darkShades: '#303D5F',
+  lightAccent: '#C29F9B',
   pageBackground: '#FFFFFF',
-  primary: '#1A5B71',
-  secondary: '#030303',
-  sideBars: '#',
+  primary: '#32C4C3',
+  text: '#FAFAF9',
 };
