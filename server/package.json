@@ -1,0 +1,11 @@
+{
+  "name": "mock-server",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "json-server --watch data.json --port 3001"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "json-server": "^0.12.2"
+  }
+}
