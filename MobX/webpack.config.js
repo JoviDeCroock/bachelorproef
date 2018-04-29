@@ -4,13 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => {
   const { NODE_ENV } = process.env;
-
   // Webpack plugins
   const plugins = [];
 
-  plugins.push(new webpack.DefinePlugin({
-    'process.env': { NODE_ENV: JSON.stringify(NODE_ENV) },
-  }));
   if (NODE_ENV !== 'production') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
@@ -50,10 +46,6 @@ module.exports = () => {
           exclude: /node_modules\.*/,
           test: /\.(js)$/,
           use: ['babel-loader'],
-        },
-        {
-          test: /\.gif$|\.jpg$|\.jpeg$|\.png|\.eot$|\.svg$|\.ttf$|\.woff$|\.woff2$|\.pdf$/,
-          use: ['file-loader'],
         },
       ],
     },
