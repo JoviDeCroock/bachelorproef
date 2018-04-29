@@ -27,19 +27,17 @@ const HomePage = props => <Async load={import('./pages/home')} componentProps={p
 const browserHistory = createBrowserHistory();
 const config = {
   action: true,
-  compute: false,
+  compute: true,
   predicate: () => true,
-  reaction: false,
-  transaction: false,
+  reaction: true,
+  transaction: true,
 };
 
 const links = [
   { label: 'Users', value: '/users' },
 ];
 
-if (process.node_env) {
-  enableLogging(config);
-}
+enableLogging(config);
 
 const MainApp = () => (
   <ThemeProvider theme={defaultTheme}>

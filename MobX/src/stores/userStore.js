@@ -31,7 +31,6 @@ class UserStore {
     try {
       this.status = LOADING;
       const user = await fetchUser(id);
-
       runInAction(() => {
         this.selectedUser = user;
         this.status = LOADED;

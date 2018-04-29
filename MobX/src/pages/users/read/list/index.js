@@ -5,6 +5,7 @@ import { inject, observer } from 'mobx-react';
 
 import userStorePropType from '../../storePropType';
 import { LOADING, ERROR } from '../../../../constants/states';
+import { Button } from '../../../../components';
 
 const ListWrapper = styled.div`
   align-items: flex-start;
@@ -32,12 +33,14 @@ const IdCell = styled.div`
 const NameCell = styled.div`
   border-left: 1px solid ${({ theme }) => theme.darkAccent};
   font-size: 22px;
-  width: 75%;
+  width: 80%;
 `;
 
 const ButtonContainer = styled.div`
   border-left: 1px solid ${({ theme }) => theme.darkAccent};
-  width: 20%;
+  display: flex;
+  justify-content: center;
+  width: 15%;
 `;
 
 @inject('userStore')
@@ -83,8 +86,8 @@ class UsersList extends Component {
               <IdCell>{id}</IdCell>
               <NameCell>{name}</NameCell>
               <ButtonContainer>
-                <button onClick={this.reroute.bind(this, 'update', id)}>Update</button>
-                <button onClick={this.reroute.bind(this, 'view', id)}>View</button>
+                <Button onClick={this.reroute.bind(this, 'update', id)} label="Update" />
+                <Button onClick={this.reroute.bind(this, 'view', id)} label="View" />
               </ButtonContainer>
             </ItemWrapper>
           ))}
