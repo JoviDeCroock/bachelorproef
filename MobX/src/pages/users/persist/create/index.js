@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { Form } from 'mobx-formstate';
 
-import userStorePropType from '../../storePropType';
 import { createUser } from '../../../../api/users';
 import { Button, TextField } from '../../../../components';
 

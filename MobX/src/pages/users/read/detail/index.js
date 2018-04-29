@@ -17,15 +17,14 @@ class UsersDetail extends Component {
     userStore: userStorePropType,
   }
 
+  componentDidMount() {
+    const { match: { params: { userId } }, userStore: { fetchUser } } = this.props;
+    fetchUser(userId);
+  }
+
   componentWillUnmount() {
     const { userStore: { clearSelection } } = this.props;
     clearSelection();
-  }
-
-  componentDidMount() {
-    const { match: { params: { userId } }, userStore: { fetchUser } } = this.props;
-    // Refetch
-    fetchUser(userId);
   }
 
   render() {
