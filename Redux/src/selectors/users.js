@@ -24,7 +24,7 @@ export const getUsersError = createSelector(
 
 export const getUsersStatus = createSelector(
   getUsersState,
-  state => state.status,
+  state => state.listStatus,
 );
 
 export const getUsersSearchString = createSelector(
@@ -40,4 +40,9 @@ export const getUsersTotalCount = createSelector(
 export const getSelectedUser = createSelector(
   getUsersState,
   state => state.selectedUser,
+);
+
+export const getUserStatus = createSelector(
+  getUsersState,
+  state => state.userStatus,
 );

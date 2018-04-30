@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import reduxForm from 'redux-form';
 
 import { createUser } from '../../../../api/users';
 import { Button, TextField } from '../../../../components';
@@ -27,4 +28,7 @@ class CreateUser extends Component {
   }
 }
 
-export default CreateUser;
+export default reduxForm({
+  form: 'createUser',
+  onSubmit: createUser,
+})(CreateUser);

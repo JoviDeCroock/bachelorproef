@@ -1,4 +1,4 @@
-import { FETCH_USERS, FETCH_USER_ERROR, FETCH_USERS_SUCCESS } from '../constants/actionTypes';
+import { FETCH_USERS, FETCH_USERS_ERROR, FETCH_USERS_SUCCESS, FETCH_USER, FETCH_USER_ERROR, FETCH_USER_SUCCESS } from '../constants/actionTypes';
 import { LOADING, ERROR, LOADED } from '../constants/states';
 
 const initialState = {
@@ -6,28 +6,72 @@ const initialState = {
   error: '',
   from: 0,
   limit: 10,
+  listStatus: LOADING,
   searchString: '',
   selectedUser: {},
-  status: LOADING,
   totalCount: 0,
+  userStatus: {},
 };
 
 // This listens on the action and then updates the state according to the return value
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_USERS: {
+    case FETCH_USER: {
+      const { userId } = action;
       return {
         ...state,
-        status: LOADING,
+        selectedUser: {
+          ...state.selectedUser,
+          [userId]: {},
+        },
+        userStatus: {
+          ...state.userStatus,
+          [userId]: LOADING,
+        },
       };
     }
     case FETCH_USER_ERROR: {
+      const { error, userId } = action;
+      return {
+        ...state,
+        error,
+        selectedUser: {
+          ...state.selectedUser,
+          [userId]: {},
+        },
+        userStatus: {
+          ...state.userStatus,
+          [userId]: ERROR,
+        },
+      };
+    }
+    case FETCH_USER_SUCCESS: {
+      const { user } = action;
+      return {
+        ...state,
+        selectedUser: {
+          ...state.selectedUser,
+          [user.id]: user,
+        },
+        userStatus: {
+          ...state.userStatus,
+          [user.id]: LOADED,
+        },
+      };
+    }
+    case FETCH_USERS: {
+      return {
+        ...state,
+        listStatus: LOADING,
+      };
+    }
+    case FETCH_USERS_ERROR: {
       const { error } = action;
       return {
         ...state,
         data: [],
         error,
-        status: ERROR,
+        listStatus: ERROR,
       };
     }
     case FETCH_USERS_SUCCESS: {
@@ -36,7 +80,7 @@ export default (state = initialState, action) => {
         ...state,
         data,
         from: state.from + state.limit,
-        status: LOADED,
+        listStatus: LOADED,
         totalCount,
       };
     }
