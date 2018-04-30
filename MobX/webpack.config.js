@@ -45,12 +45,23 @@ module.exports = () => {
         {
           exclude: /node_modules\.*/,
           test: /\.(js)$/,
-          use: ['babel-loader'],
+          use: ['babel-loader?cacheDirectory=true'],
         },
       ],
     },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            chunks: 'all',
+            name: 'vendors',
+            test: /[\\/]node_modules[\\/]/,
+          },
+        },
+      },
+    },
     output: {
-      filename: 'index.js',
+      filename: '[name].js',
       path: path.resolve(__dirname, './dist'),
       publicPath: '/',
     },

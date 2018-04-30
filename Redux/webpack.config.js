@@ -11,7 +11,7 @@ module.exports = () => {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  plugins.push(new HtmlWebpackPlugin({ title: 'CMS - Redux' }));
+  plugins.push(new HtmlWebpackPlugin({ title: 'CMS - MobX' }));
 
   // Entry
   const main = ['babel-polyfill'];
@@ -38,19 +38,32 @@ module.exports = () => {
       publicPath: '/',
     },
     devtool,
-    entry: { main },
+    entry: {
+      main,
+    },
     mode: NODE_ENV,
     module: {
       rules: [
         {
           exclude: /node_modules\.*/,
           test: /\.(js)$/,
-          use: ['babel-loader'],
+          use: ['babel-loader?cacheDirectory=true'],
         },
       ],
     },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            chunks: 'all',
+            name: 'vendors',
+            test: /[\\/]node_modules[\\/]/,
+          },
+        },
+      },
+    },
     output: {
-      filename: 'index.js',
+      filename: '[name].js',
       path: path.resolve(__dirname, './dist'),
       publicPath: '/',
     },
