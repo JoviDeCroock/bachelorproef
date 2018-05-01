@@ -15,8 +15,8 @@ const UsersPage = () => (
     <Switch>
       <Route exact path="/" component={UsersList} />
       <Route exact path="/:userId/view" component={UserDetail} />
-      <Route exact path="/:userId/update" component={undefined} />
-      <Route exact path="/create" component={undefined} />
+      <Route exact path="/:userId/update" component={Updateuser} />
+      <Route exact path="/create" component={CreateUser} />
     </Switch>
   </Fragment>
 );

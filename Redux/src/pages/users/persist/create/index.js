@@ -1,34 +1,35 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import reduxForm from 'redux-form';
+import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 
 import { createUser } from '../../../../api/users';
 import { Button, TextField } from '../../../../components';
+import { createUserAction } from '../../../../actions/users';
 
-class CreateUser extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func,
-  }
+const CreateUser = ({ handleSubmit }) => (
+  <Fragment>
+    <h1>Create</h1>
+    <form onSubmit={handleSubmit}>
+      <TextField
+        fieldId="name"
+        name="name"
+        label="Name"
+        placeholder="Name" />
+      <Button type="submit" label="Submit" />
+    </form>
+  </Fragment>
+);
 
-  render() {
-    const { onSubmit } = this.props;
+CreateUser.propTypes = {
+  handleSubmit: PropTypes.func,
+};
 
-    return (
-      <Fragment>
-        <h1>Create</h1>
-        <form onSubmit={onSubmit}>
-          <TextField
-            fieldId="name"
-            label="Name"
-            placeholder="Name" />
-          <Button type="submit" label="Submit" />
-        </form>
-      </Fragment>
-    );
-  }
-}
-
-export default reduxForm({
+const formedContainer = reduxForm({
   form: 'createUser',
   onSubmit: createUser,
 })(CreateUser);
+
+export default connect(() => ({}), {
+  onSubmit: createUserAction,
+})(formedContainer);

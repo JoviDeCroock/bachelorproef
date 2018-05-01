@@ -1,8 +1,9 @@
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { FETCH_USERS, FETCH_USER } from '../constants/actionTypes';
-import { fetchUsers, fetchUser } from '../api/users';
+import { CREATE_USER, FETCH_USERS, FETCH_USER } from '../constants/actionTypes';
+import { createUser, fetchUsers, fetchUser } from '../api/users';
 import { fetchUsersSuccessAction, fetchUsersErrorAction, fetchUserSuccessAction, fetchUserErrorAction } from '../actions/users';
+import { getUsersTotalCount } from '../selectors/users';
 
 export default function* () {
   yield takeEvery(FETCH_USERS, function* fetchUsersSaga({ limit, offset, searchString }) {
@@ -22,6 +23,18 @@ export default function* () {
       yield put(fetchUserSuccessAction({ user }));
     } catch (error) {
       yield put(fetchUserErrorAction({ error, userId }));
+    }
+  });
+
+  yield takeEvery(CREATE_USER, function* createUserSaga({ name }) {
+    try {
+      const totalCount = yield select(getUsersTotalCount);
+      if (!totalCount) {
+        // Catch
+      }
+      yield createUser({ name }, totalCount);
+    } catch (error) {
+      throw error;
     }
   });
 }

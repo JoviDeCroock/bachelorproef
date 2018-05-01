@@ -1,4 +1,4 @@
-import { FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_ERROR, FETCH_USERS, FETCH_USERS_SUCCESS, FETCH_USERS_ERROR } from '../constants/actionTypes';
+import { CREATE_USER, FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_ERROR, FETCH_USERS, FETCH_USERS_SUCCESS, FETCH_USERS_ERROR } from '../constants/actionTypes';
 
 // USERS
 // /////
@@ -44,4 +44,12 @@ export const fetchUserErrorAction = ({ userId, error }) => ({
   error,
   type: FETCH_USER_ERROR,
   userId,
+});
+
+// CREATE
+// //////
+
+export const createUserAction = values => ({
+  type: CREATE_USER,
+  values,
 });

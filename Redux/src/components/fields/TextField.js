@@ -1,8 +1,9 @@
 import React, { Fragment, PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Field } from 'redux-form';
 
-const TextInput = styled.input`
+const StyledTextInput = styled.input`
   border: 0;
   border-bottom: 1px solid black;
   background: ${({ disabled }) => (disabled ? '#959998' : 'transparent')};
@@ -19,15 +20,17 @@ const ErrorText = styled.p`
   margin-top: 0;
 `;
 
-class TextField extends PureComponent {
+class TextInput extends PureComponent {
   static propTypes = {
     className: PropTypes.string,
     disabled: PropTypes.bool,
     error: PropTypes.string,
-    onChange: PropTypes.func,
+    input: PropTypes.shape({
+      onChange: PropTypes.func,
+      value: PropTypes.string,
+    }),
     placeholder: PropTypes.string,
     type: PropTypes.string,
-    value: PropTypes.any, // eslint-disable-line
   }
 
   constructor(props) {
@@ -36,7 +39,7 @@ class TextField extends PureComponent {
   }
 
   onChange(e) {
-    const { onChange } = this.props;
+    const { input: { onChange } } = this.props;
     e.preventDefault();
     e.stopPropagation();
     onChange(e.target.value);
@@ -44,12 +47,12 @@ class TextField extends PureComponent {
 
   render() {
     const {
-      className, disabled, error, placeholder, value = '', type = 'text',
+      className, disabled, error, placeholder, input: { value = '' }, type = 'text',
     } = this.props;
 
     return (
       <Fragment>
-        <TextInput
+        <StyledTextInput
           className={className}
           disabled={disabled}
           placeholder={placeholder}
@@ -62,5 +65,14 @@ class TextField extends PureComponent {
     );
   }
 }
+
+const TextField = ({ fieldId, name, ...props }) => (
+  <Field component={TextInput} name={name} fieldId={fieldId} {...props} />
+);
+
+TextField.propTypes = {
+  fieldId: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 export default TextField;

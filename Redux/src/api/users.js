@@ -2,13 +2,10 @@ import { get, post, put } from './_request';
 
 const BASE_URL = 'http://localhost:3001';
 
-let total = 1000;
-
 export async function fetchUsers(searchString, limit, offset) {
   try {
     const query = `_page=${Math.floor(offset / limit)}&_limit=${limit}`;
     const { data: users, headers: { 'x-total-count': totalCount } } = await get(`${BASE_URL}/users?${query}`);
-    total = totalCount;
     return { totalCount, users };
   } catch (err) {
     throw err;
@@ -24,9 +21,9 @@ export async function fetchUser(id) {
   }
 }
 
-export async function createUser(user) {
+export async function createUser(user, totalCount) {
   try {
-    const dbUser = { id: total += 1, ...user };
+    const dbUser = { id: totalCount + 1, ...user };
     const { data: newUser } = await post(`${BASE_URL}/users/`, dbUser);
     return newUser;
   } catch (err) {
