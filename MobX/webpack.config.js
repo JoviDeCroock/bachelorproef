@@ -14,7 +14,17 @@ module.exports = () => {
   plugins.push(new HtmlWebpackPlugin({ title: 'CMS - MobX' }));
 
   // Entry
-  const main = ['babel-polyfill'];
+  const vendors = [
+    'babel-polyfill',
+    'react',
+    'react-dom',
+    'react-router',
+    'mobx',
+    'mobx-formstate',
+    'styled-components',
+  ];
+
+  const main = [...vendors];
   if (NODE_ENV !== 'production') {
     main.push('react-hot-loader/patch');
     main.push('webpack-dev-server/client?http://127.0.0.1:3000');
@@ -51,13 +61,16 @@ module.exports = () => {
     },
     optimization: {
       splitChunks: {
+        automaticNameDelimiter: '-',
         cacheGroups: {
-          commons: {
-            chunks: 'all',
-            name: 'vendors',
-            test: /[\\/]node_modules[\\/]/,
+          vendor: {
+            chunks: 'initial',
+            enforce: true,
+            name: 'vendor',
+            test: m => vendors.indexOf(m.rawRequest) > -1,
           },
         },
+        chunks: 'all',
       },
     },
     output: {
