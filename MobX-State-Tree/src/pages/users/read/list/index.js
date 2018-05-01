@@ -58,14 +58,9 @@ class UsersList extends Component {
     fetchUsers();
   }
 
-  componentWillUnmount() {
-    const { userStore: { clearList } } = this.props;
-    clearList();
-  }
-
   reroute = (mode, id) => {
     const { history } = this.props;
-    if (id) {
+    if (id !== undefined) {
       history.push(`/${id}/${mode}`);
     } else {
       history.push(`/${mode}`);

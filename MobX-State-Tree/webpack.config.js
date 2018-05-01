@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = () => {
   const { NODE_ENV } = process.env;
@@ -12,6 +14,15 @@ module.exports = () => {
   }
 
   plugins.push(new HtmlWebpackPlugin({ title: 'CMS - MobX-State-Tree' }));
+  plugins.push(new CompressionPlugin({
+    algorithm: 'gzip',
+    asset: '[path].gz[query]',
+    deleteOriginalAssets: true,
+    minRatio: 0.8,
+    test: /\.js$|\.css$|\.html$/,
+    threshold: 10240,
+  }));
+  plugins.push(new CleanWebpackPlugin('dist'));
 
   // Entry
   const vendors = [

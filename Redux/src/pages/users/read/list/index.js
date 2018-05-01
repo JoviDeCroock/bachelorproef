@@ -69,7 +69,7 @@ class UsersList extends Component {
 
   reroute = (mode, id) => {
     const { history } = this.props;
-    if (id) {
+    if (id !== undefined) {
       history.push(`/${id}/${mode}`);
     } else {
       history.push(`/${mode}`);

@@ -9,6 +9,6 @@ export default PropTypes.shape({
   offset: PropTypes.number,
   searchString: PropTypes.string,
   selectedUser: PropTypes.object,
-  status: PropTypes.symbol,
+  status: PropTypes.string,
   users: PropTypes.object,
 });
