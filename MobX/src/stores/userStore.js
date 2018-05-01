@@ -1,7 +1,7 @@
 import { action, observable, runInAction } from 'mobx';
 
 import { ERROR, LOADED, LOADING } from '../constants/states';
-import { fetchUser, fetchUsers } from '../api/users';
+import { fetchUser, fetchUsers, fetchTotalCount } from '../api/users';
 
 class UserStore {
   @observable users = [];
@@ -26,7 +26,6 @@ class UserStore {
       runInAction(() => {
         this.status = ERROR;
       });
-      throw error;
     }
   }
 
@@ -43,7 +42,21 @@ class UserStore {
       runInAction(() => {
         this.status = ERROR;
       });
-      throw error;
+    }
+  }
+
+  @action.bound
+  async fetchTotalCount() {
+    try {
+      const { totalCount } = await fetchTotalCount();
+      runInAction(() => {
+        this.totalCount = totalCount;
+      });
+      return totalCount;
+    } catch (error) {
+      runInAction(() => {
+        this.status = ERROR;
+      });
     }
   }
 

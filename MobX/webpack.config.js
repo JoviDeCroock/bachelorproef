@@ -27,7 +27,7 @@ module.exports = () => {
   const main = [...vendors];
   if (NODE_ENV !== 'production') {
     main.push('react-hot-loader/patch');
-    main.push('webpack-dev-server/client?http://127.0.0.1:3000');
+    main.push('webpack-dev-server/client?http://127.0.0.1:3001');
     main.push('webpack/hot/only-dev-server');
   }
 
@@ -44,7 +44,7 @@ module.exports = () => {
       host: '127.0.0.1',
       hot: true,
       inline: true,
-      port: 3000,
+      port: 3001,
       publicPath: '/',
     },
     devtool,

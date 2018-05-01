@@ -11,7 +11,7 @@ module.exports = () => {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
-  plugins.push(new HtmlWebpackPlugin({ title: 'CMS - MobX' }));
+  plugins.push(new HtmlWebpackPlugin({ title: 'CMS - Redux' }));
 
   // Entry
   const vendors = [

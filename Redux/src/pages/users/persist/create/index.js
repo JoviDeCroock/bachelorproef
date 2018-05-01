@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { createUser } from '../../../../api/users';
 import { Button, TextField } from '../../../../components';
 import { createUserAction } from '../../../../actions/users';
 
@@ -27,7 +26,6 @@ CreateUser.propTypes = {
 
 const formedContainer = reduxForm({
   form: 'createUser',
-  onSubmit: createUser,
 })(CreateUser);
 
 export default connect(() => ({}), {

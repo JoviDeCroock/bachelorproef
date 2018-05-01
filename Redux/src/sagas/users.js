@@ -1,8 +1,8 @@
 import { put, select, takeEvery } from 'redux-saga/effects';
 
-import { CREATE_USER, FETCH_USERS, FETCH_USER } from '../constants/actionTypes';
-import { createUser, fetchUsers, fetchUser } from '../api/users';
-import { fetchUsersSuccessAction, fetchUsersErrorAction, fetchUserSuccessAction, fetchUserErrorAction } from '../actions/users';
+import { CREATE_USER, FETCH_USERS, FETCH_USER, UPDATE_USER, FETCH_TOTAL } from '../constants/actionTypes';
+import { createUser, fetchUsers, fetchUser, fetchTotalCount, updateUser } from '../api/users';
+import { fetchUsersSuccessAction, fetchUsersErrorAction, fetchUserSuccessAction, fetchUserErrorAction, fetchTotalSuccessAction, fetchTotalErrorAction } from '../actions/users';
 import { getUsersTotalCount } from '../selectors/users';
 
 export default function* () {
@@ -26,13 +26,30 @@ export default function* () {
     }
   });
 
-  yield takeEvery(CREATE_USER, function* createUserSaga({ name }) {
+  function* fetchTotalSaga() {
     try {
+      const { totalCount } = yield fetchTotalCount();
+      yield put(fetchTotalSuccessAction({ totalCount }));
+    } catch (error) {
+      yield put(fetchTotalErrorAction({ error }));
+    }
+  }
+
+  yield takeEvery(CREATE_USER, function* createUserSaga({ values: { name } }) {
+    try {
+      yield fetchTotalSaga();
       const totalCount = yield select(getUsersTotalCount);
-      if (!totalCount) {
-        // Catch
-      }
       yield createUser({ name }, totalCount);
+    } catch (error) {
+      throw error;
+    }
+  });
+
+  yield takeEvery(FETCH_TOTAL, fetchTotalSaga);
+
+  yield takeEvery(UPDATE_USER, function* updateUserSaga({ values: { id, name } }) {
+    try {
+      yield updateUser({ id, name });
     } catch (error) {
       throw error;
     }

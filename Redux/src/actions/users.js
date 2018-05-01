@@ -1,4 +1,4 @@
-import { CREATE_USER, FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_ERROR, FETCH_USERS, FETCH_USERS_SUCCESS, FETCH_USERS_ERROR } from '../constants/actionTypes';
+import { CREATE_USER, FETCH_USER, FETCH_USER_SUCCESS, FETCH_USER_ERROR, FETCH_USERS, FETCH_USERS_SUCCESS, FETCH_USERS_ERROR, UPDATE_USER, FETCH_TOTAL, FETCH_TOTAL_SUCCESS, FETCH_TOTAL_ERROR } from '../constants/actionTypes';
 
 // USERS
 // /////
@@ -46,10 +46,35 @@ export const fetchUserErrorAction = ({ userId, error }) => ({
   userId,
 });
 
+// TOTALCOUNT
+// /////////
+
+export const fetchTotalAction = () => ({
+  type: FETCH_TOTAL,
+});
+
+export const fetchTotalSuccessAction = ({ totalCount }) => ({
+  totalCount,
+  type: FETCH_TOTAL_SUCCESS,
+});
+
+export const fetchTotalErrorAction = ({ error }) => ({
+  error,
+  type: FETCH_TOTAL_ERROR,
+});
+
 // CREATE
 // //////
 
 export const createUserAction = values => ({
   type: CREATE_USER,
+  values,
+});
+
+// UPDATE
+// //////
+
+export const updateUserAction = values => ({
+  type: UPDATE_USER,
   values,
 });

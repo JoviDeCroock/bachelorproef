@@ -7,7 +7,7 @@
     "dev": "NODE_ENV=development webpack-dev-server",
     "stats": "NODE_ENV=production webpack --json > stats.json",
     "dev-windows": "cross-env NODE_ENV=development webpack-dev-server",
-    "build-windows": "cross-env NODE_ENV=production webpack",
+    "build-windows": "cross-env NODE_ENV=production webpack -p",
     "stats-windows": "cross-env NODE_ENV=production webpack --json > stats.json"
   },
   "devDependencies": {

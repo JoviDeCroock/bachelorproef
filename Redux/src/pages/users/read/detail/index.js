@@ -24,6 +24,7 @@ class UsersDetail extends Component {
 
   render() {
     const { status, selectedUser: { id, name } } = this.props;
+
     if (status === LOADING) {
       return <div>Loading</div>;
     } else if (status === ERROR) {

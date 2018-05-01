@@ -69,7 +69,11 @@ class UsersList extends Component {
 
   reroute = (mode, id) => {
     const { history } = this.props;
-    history.push(`/${id}/${mode}`);
+    if (id) {
+      history.push(`/${id}/${mode}`);
+    } else {
+      history.push(`/${mode}`);
+    }
   }
 
   render() {
@@ -83,6 +87,7 @@ class UsersList extends Component {
     return (
       <Fragment>
         <h1>List</h1>
+        <Button onClick={this.reroute.bind(this, 'create', undefined)} label="Create" />
         <ListWrapper>
           {users.map(({ id, name }) => (
             <ItemWrapper key={id}>

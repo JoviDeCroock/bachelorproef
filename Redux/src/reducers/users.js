@@ -1,4 +1,4 @@
-import { FETCH_USERS, FETCH_USERS_ERROR, FETCH_USERS_SUCCESS, FETCH_USER, FETCH_USER_ERROR, FETCH_USER_SUCCESS } from '../constants/actionTypes';
+import { FETCH_USERS, FETCH_USERS_ERROR, FETCH_USERS_SUCCESS, FETCH_USER, FETCH_USER_ERROR, FETCH_USER_SUCCESS, FETCH_TOTAL_SUCCESS } from '../constants/actionTypes';
 import { LOADING, ERROR, LOADED } from '../constants/states';
 
 const initialState = {
@@ -16,6 +16,13 @@ const initialState = {
 // This listens on the action and then updates the state according to the return value
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_TOTAL_SUCCESS: {
+      const { totalCount } = action;
+      return {
+        ...state,
+        totalCount,
+      };
+    }
     case FETCH_USER: {
       const { userId } = action;
       return {

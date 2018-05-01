@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { Form } from 'mobx-formstate';
 
+import userStorePropType from '../../storePropType';
 import { createUser } from '../../../../api/users';
 import { Button, TextField } from '../../../../components';
 
@@ -11,6 +12,13 @@ import { Button, TextField } from '../../../../components';
 class CreateUser extends Component {
   static propTypes = {
     onSubmit: PropTypes.func,
+    userStore: userStorePropType,
+  }
+
+  async componentDidMount() {
+    const { patchValues, userStore: { fetchTotalCount } } = this.props;
+    const totalCount = await fetchTotalCount();
+    patchValues({ id: Number(totalCount) + 1 });
   }
 
   render() {

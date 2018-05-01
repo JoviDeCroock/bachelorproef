@@ -29,7 +29,7 @@ class UpdateUser extends Component {
 
   componentDidUpdate(prevProps) {
     const { patchValues, userStore: { selectedUser } } = this.props;
-    if (prevProps.selectedUser !== selectedUser) {
+    if (prevProps.userStore.selectedUser !== selectedUser) {
       patchValues(selectedUser);
     }
   }
