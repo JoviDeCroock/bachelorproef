@@ -1,6 +1,6 @@
 import { get, post, put } from './_request';
 
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'http://localhost:8000';
 
 let total = 1000;
 

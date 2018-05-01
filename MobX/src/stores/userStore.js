@@ -23,7 +23,9 @@ class UserStore {
         this.status = LOADED;
       });
     } catch (error) {
-      this.status = ERROR;
+      runInAction(() => {
+        this.status = ERROR;
+      });
       throw error;
     }
   }
@@ -38,7 +40,9 @@ class UserStore {
         this.status = LOADED;
       });
     } catch (error) {
-      this.status = ERROR;
+      runInAction(() => {
+        this.status = ERROR;
+      });
       throw error;
     }
   }
