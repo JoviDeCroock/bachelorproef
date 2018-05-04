@@ -7,7 +7,8 @@
     "stats": "NODE_ENV=production webpack --json > stats.json",
     "dev-windows": "cross-env NODE_ENV=development webpack-dev-server",
     "build-windows": "cross-env NODE_ENV=production webpack -p",
-    "stats-windows": "cross-env NODE_ENV=production webpack --json > stats.json"
+    "stats-windows": "cross-env NODE_ENV=production webpack --json > stats.json",
+    "server": "cd ./dist && http-server -o -g"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -30,6 +31,7 @@
     "eslint-plugin-react": "^7.7.0",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^0.18.0",
+    "http-server": "^0.11.1",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^3.1.3"

@@ -9,20 +9,23 @@ module.exports = () => {
   // Webpack plugins
   const plugins = [];
 
+  if (NODE_ENV === 'production') {
+    plugins.push(new CompressionPlugin({
+      algorithm: 'gzip',
+      asset: '[path].gz[query]',
+      deleteOriginalAssets: true,
+      minRatio: 0.8,
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+    }));
+    plugins.push(new CleanWebpackPlugin('dist'));
+  }
+
   if (NODE_ENV !== 'production') {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
   plugins.push(new HtmlWebpackPlugin({ title: 'CMS - MobX' }));
-  plugins.push(new CompressionPlugin({
-    algorithm: 'gzip',
-    asset: '[path].gz[query]',
-    deleteOriginalAssets: true,
-    minRatio: 0.8,
-    test: /\.js$|\.css$|\.html$/,
-    threshold: 10240,
-  }));
-  plugins.push(new CleanWebpackPlugin('dist'));
 
   // Entry
   const vendors = [
