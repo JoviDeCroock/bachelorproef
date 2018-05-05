@@ -57,6 +57,7 @@ class UserStore {
       runInAction(() => {
         this.status = ERROR;
       });
+      throw error;
     }
   }
 

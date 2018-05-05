@@ -2,7 +2,7 @@ import { flow, types } from 'mobx-state-tree';
 
 import User from './models/user';
 import { ERROR, LOADING, LOADED } from '../constants/states';
-import { fetchUser, fetchUsers } from '../api/users';
+import { fetchTotalCount, fetchUser, fetchUsers } from '../api/users';
 
 const UserStore = types
   .model({
@@ -16,6 +16,17 @@ const UserStore = types
     users: types.optional(types.array(User), []),
   })
   .actions(self => ({
+    fetchTotalCount: flow(function* fetchTotalCountAction() {
+      try {
+        const { totalCount } = yield fetchTotalCount();
+        self.totalCount = Number(totalCount);
+        return self.totalCount;
+      } catch (e) {
+        self.error = 'unexpected error';
+        self.status = ERROR;
+        throw e;
+      }
+    }),
     fetchUser: flow(function* fetchUserAction(selection) {
       self.selectedUser = { id: -1, name: 'x' };
       self.status = LOADING;

@@ -13,7 +13,7 @@ module.exports = () => {
     plugins.push(new CompressionPlugin({
       algorithm: 'gzip',
       asset: '[path].gz[query]',
-      deleteOriginalAssets: false,
+      deleteOriginalAssets: true,
       minRatio: 0.8,
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,

@@ -3,11 +3,13 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = () => {
   const { NODE_ENV } = process.env;
   // Webpack plugins
   const plugins = [];
+  const minimizer = [];
 
   if (NODE_ENV === 'production') {
     plugins.push(new CompressionPlugin({
@@ -18,7 +20,18 @@ module.exports = () => {
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
     }));
+
     plugins.push(new CleanWebpackPlugin('dist'));
+
+    // Custom minimizer in production in dev we use the standard one
+    minimizer.push(new UglifyJsPlugin({
+      sourceMap: false,
+      uglifyOptions: {
+        compress: {
+          inline: false,
+        },
+      },
+    }));
   }
 
   if (NODE_ENV !== 'production') {
@@ -48,7 +61,7 @@ module.exports = () => {
   main.push('./src/index');
 
   // devtool
-  const devtool = NODE_ENV !== 'production' ? 'source-map' : undefined;
+  const devtool = NODE_ENV !== 'production' ? 'source-map' : 'none';
 
   // Configuration
   return {
@@ -74,6 +87,7 @@ module.exports = () => {
       ],
     },
     optimization: {
+      minimizer,
       splitChunks: {
         automaticNameDelimiter: '-',
         cacheGroups: {
